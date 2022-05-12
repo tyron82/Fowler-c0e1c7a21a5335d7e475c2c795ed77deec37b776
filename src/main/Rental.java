@@ -27,13 +27,13 @@ public class Rental {
 
     private void calculateAmount() {
         switch (this.movie.getPriceCode()) {
-            case Movie.REGULAR:
+            case REGULAR:
                 this.amount = calculateRegularAmount();
                 break;
-            case Movie.NEW_RELEASE:
+            case NEW_RELEASE:
                 this.amount = calculateNewReleaseAmount();
                 break;
-            case Movie.CHILDRENS:
+            case CHILDRENS:
                 this.amount = calculateChildrenAmount();
                 break;
         }

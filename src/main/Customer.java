@@ -3,6 +3,8 @@ package main;
 import java.util.LinkedList;
 import java.util.List;
 
+import main.Movie.priceCodes;
+
 public class Customer {
     private String name;
     private List<Rental> rentals = new LinkedList<>();
@@ -38,7 +40,7 @@ public class Customer {
 
     private int additionalFrequentRenterPoints(Rental each) {
         int additionalFrequentRenterPoints = 1;
-        if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE) && each.getDaysRented() > 1)
+        if ((each.getMovie().getPriceCode() == priceCodes.NEW_RELEASE) && each.getDaysRented() > 1)
             additionalFrequentRenterPoints++;
         return additionalFrequentRenterPoints;
     }
