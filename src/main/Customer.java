@@ -26,7 +26,7 @@ public class Customer {
 
         for (Rental rental : this.rentals) {
             double rentalAmount = 0;
-            rentalAmount = amountFor(rental);
+            rentalAmount = rental.amount();
             frequentRenterPoints += additionalFrequentRenterPoints(rental);
             result += createResultBody(rentalAmount, rental);
             totalRentalAmount += rentalAmount;
@@ -59,41 +59,6 @@ public class Customer {
         String resultFooter = "Amount owed is " + String.valueOf(totalAmount) + "\n";
         resultFooter += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
         return resultFooter;
-    }
-
-    private double amountFor(Rental rental) {
-        double rentalAmount = 0;
-        switch (rental.getMovie().getPriceCode()) {
-            case Movie.REGULAR:
-                rentalAmount = calculateRegularAmount(rental);
-                break;
-            case Movie.NEW_RELEASE:
-                rentalAmount = calculateNewReleaseAmount(rental);
-                break;
-            case Movie.CHILDRENS:
-                rentalAmount = calculateChildrenAmount(rental);
-                break;
-        }
-        return rentalAmount;
-    }
-
-    private double calculateRegularAmount(Rental rental) {
-        double rentalRegularAmount = 2;
-        if (rental.getDaysRented() > 2)
-            rentalRegularAmount += (rental.getDaysRented() - 2) * 1.5;
-        return rentalRegularAmount;
-    }
-
-    private double calculateNewReleaseAmount(Rental rental) {
-        double rentalNewReleaseAmount = rental.getDaysRented() * 3;
-        return rentalNewReleaseAmount;
-    }
-
-    private double calculateChildrenAmount(Rental rental) {
-        double rentalChildrenAmount = 1.5;
-        if (rental.getDaysRented() > 3)
-            rentalChildrenAmount += (rental.getDaysRented() - 3) * 1.5;
-        return rentalChildrenAmount;
     }
 
 }
