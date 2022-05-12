@@ -1,18 +1,18 @@
 package main;
 
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Customer {
     private String name;
-    private Vector rentals = new Vector();
+    private List<Rental> rentals = new LinkedList<>();
 
     public Customer(String newname) {
         name = newname;
     };
 
     public void addRental(Rental arg) {
-        rentals.addElement(arg);
+        rentals.add(arg);
     };
 
     public String getName() {
@@ -22,17 +22,16 @@ public class Customer {
     public String statement() {
         double totalRentalAmount = 0;
         int frequentRenterPoints = 0;
-        Enumeration enum_rentals = rentals.elements();
         String result = createResultHeader();
 
-        while (enum_rentals.hasMoreElements()) {
+        for (Rental rental : this.rentals) {
             double rentalAmount = 0;
-            Rental rental = (Rental) enum_rentals.nextElement();
             rentalAmount = amountFor(rental);
             frequentRenterPoints += additionalFrequentRenterPoints(rental);
             result += createResultBody(rentalAmount, rental);
             totalRentalAmount += rentalAmount;
         }
+
         result += createResultFooter(totalRentalAmount, frequentRenterPoints);
         return result;
     }
