@@ -3,10 +3,12 @@ package main;
 public class Rental {
     private Movie movie;
     private int daysRented;
+    private double amount;
 
     public Rental(Movie newmovie, int newdaysRented) {
         movie = newmovie;
         daysRented = newdaysRented;
+        amount = -1;
     }
 
     public int getDaysRented() {
@@ -17,20 +19,24 @@ public class Rental {
         return movie;
     }
 
-    public double amount() {
-        double rentalAmount = 0;
+    public double getAmount() {
+        if (this.amount == -1)
+            calculateAmount();
+        return this.amount;
+    }
+
+    private void calculateAmount() {
         switch (this.movie.getPriceCode()) {
             case Movie.REGULAR:
-                rentalAmount = calculateRegularAmount();
+                this.amount = calculateRegularAmount();
                 break;
             case Movie.NEW_RELEASE:
-                rentalAmount = calculateNewReleaseAmount();
+                this.amount = calculateNewReleaseAmount();
                 break;
             case Movie.CHILDRENS:
-                rentalAmount = calculateChildrenAmount();
+                this.amount = calculateChildrenAmount();
                 break;
         }
-        return rentalAmount;
     }
 
     private double calculateRegularAmount() {

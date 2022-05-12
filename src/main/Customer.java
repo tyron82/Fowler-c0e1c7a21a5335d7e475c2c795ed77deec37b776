@@ -26,7 +26,7 @@ public class Customer {
 
         for (Rental rental : this.rentals) {
             double rentalAmount = 0;
-            rentalAmount = rental.amount();
+            rentalAmount = rental.getAmount();
             frequentRenterPoints += additionalFrequentRenterPoints(rental);
             result += createResultBody(rentalAmount, rental);
             totalRentalAmount += rentalAmount;
