@@ -20,20 +20,20 @@ public class Customer {
     };
 
     public String statement() {
-        double totalAmount = 0;
+        double totalRentalAmount = 0;
         int frequentRenterPoints = 0;
         Enumeration enum_rentals = rentals.elements();
         String result = createResultHeader();
 
         while (enum_rentals.hasMoreElements()) {
-            double thisAmount = 0;
-            Rental each = (Rental) enum_rentals.nextElement();
-            thisAmount = amountFor(each);
-            frequentRenterPoints += additionalFrequentRenterPoints(each);
-            result += createResultBody(thisAmount, each);
-            totalAmount += thisAmount;
+            double rentalAmount = 0;
+            Rental rental = (Rental) enum_rentals.nextElement();
+            rentalAmount = amountFor(rental);
+            frequentRenterPoints += additionalFrequentRenterPoints(rental);
+            result += createResultBody(rentalAmount, rental);
+            totalRentalAmount += rentalAmount;
         }
-        result += createResultFooter(totalAmount, frequentRenterPoints);
+        result += createResultFooter(totalRentalAmount, frequentRenterPoints);
         return result;
     }
 
@@ -50,9 +50,9 @@ public class Customer {
         return resultHeader;
     }
 
-    private String createResultBody(double thisAmount, Rental each) {
+    private String createResultBody(double rentalAmount, Rental each) {
         String resultBody = "\t" + each.getMovie().getTitle() + "\t" + "\t" + each.getDaysRented() + "\t"
-                + String.valueOf(thisAmount) + "\n";
+                + String.valueOf(rentalAmount) + "\n";
         return resultBody;
     }
 
@@ -62,39 +62,39 @@ public class Customer {
         return resultFooter;
     }
 
-    private double amountFor(Rental each) {
-        double thisAmount = 0;
-        switch (each.getMovie().getPriceCode()) {
+    private double amountFor(Rental rental) {
+        double rentalAmount = 0;
+        switch (rental.getMovie().getPriceCode()) {
             case Movie.REGULAR:
-                thisAmount = calculateRegularAmount(each);
+                rentalAmount = calculateRegularAmount(rental);
                 break;
             case Movie.NEW_RELEASE:
-                thisAmount = calculateNewReleaseAmount(each);
+                rentalAmount = calculateNewReleaseAmount(rental);
                 break;
             case Movie.CHILDRENS:
-                thisAmount = calculateChildrenAmount(each);
+                rentalAmount = calculateChildrenAmount(rental);
                 break;
         }
-        return thisAmount;
+        return rentalAmount;
     }
 
-    private double calculateRegularAmount(Rental each) {
-        double thisAmount = 2;
-        if (each.getDaysRented() > 2)
-            thisAmount += (each.getDaysRented() - 2) * 1.5;
-        return thisAmount;
+    private double calculateRegularAmount(Rental rental) {
+        double rentalRegularAmount = 2;
+        if (rental.getDaysRented() > 2)
+            rentalRegularAmount += (rental.getDaysRented() - 2) * 1.5;
+        return rentalRegularAmount;
     }
 
-    private double calculateNewReleaseAmount(Rental each) {
-        double thisAmount = each.getDaysRented() * 3;
-        return thisAmount;
+    private double calculateNewReleaseAmount(Rental rental) {
+        double rentalNewReleaseAmount = rental.getDaysRented() * 3;
+        return rentalNewReleaseAmount;
     }
 
-    private double calculateChildrenAmount(Rental each) {
-        double thisAmount = 1.5;
-        if (each.getDaysRented() > 3)
-            thisAmount += (each.getDaysRented() - 3) * 1.5;
-        return thisAmount;
+    private double calculateChildrenAmount(Rental rental) {
+        double rentalChildrenAmount = 1.5;
+        if (rental.getDaysRented() > 3)
+            rentalChildrenAmount += (rental.getDaysRented() - 3) * 1.5;
+        return rentalChildrenAmount;
     }
 
 }
