@@ -3,8 +3,6 @@ package main;
 import java.util.LinkedList;
 import java.util.List;
 
-import main.Movie.priceCodes;
-
 public class Customer {
     private String name;
     private List<Rental> rentals = new LinkedList<>();
@@ -17,50 +15,12 @@ public class Customer {
         rentals.add(arg);
     };
 
+    public List<Rental> getRentals() {
+        return this.rentals;
+    }
+
     public String getName() {
         return name;
     };
-
-    public String statement() {
-        double totalRentalAmount = 0;
-        int frequentRenterPoints = 0;
-        String result = createResultHeader();
-
-        for (Rental rental : this.rentals) {
-            double rentalAmount = 0;
-            rentalAmount = rental.getAmount();
-            frequentRenterPoints += additionalFrequentRenterPoints(rental);
-            result += createResultBody(rentalAmount, rental);
-            totalRentalAmount += rentalAmount;
-        }
-
-        result += createResultFooter(totalRentalAmount, frequentRenterPoints);
-        return result;
-    }
-
-    private int additionalFrequentRenterPoints(Rental each) {
-        int additionalFrequentRenterPoints = 1;
-        if ((each.getMovie().getPriceCode() == priceCodes.NEW_RELEASE) && each.getDaysRented() > 1)
-            additionalFrequentRenterPoints++;
-        return additionalFrequentRenterPoints;
-    }
-
-    private String createResultHeader() {
-        String resultHeader = "Rental Record for " + this.getName() + "\n";
-        resultHeader += "\t" + "Title" + "\t" + "\t" + "Days" + "\t" + "Amount" + "\n";
-        return resultHeader;
-    }
-
-    private String createResultBody(double rentalAmount, Rental each) {
-        String resultBody = "\t" + each.getMovie().getTitle() + "\t" + "\t" + each.getDaysRented() + "\t"
-                + String.valueOf(rentalAmount) + "\n";
-        return resultBody;
-    }
-
-    private String createResultFooter(double totalAmount, int frequentRenterPoints) {
-        String resultFooter = "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        resultFooter += "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
-        return resultFooter;
-    }
 
 }

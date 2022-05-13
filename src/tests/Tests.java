@@ -26,7 +26,7 @@ public class Tests {
                 c1.addRental(r1);
                 c1.addRental(r2);
 
-                actuallString = c1.statement();
+                actuallString = Program.statement(c1);
 
                 Assert.assertEquals(expectedString, actuallString);
         }

@@ -58,4 +58,10 @@ public class Rental {
         return rentalChildrenAmount;
     }
 
+    public String toString() {
+        String resultBody = "\t" + this.movie.getTitle() + "\t" + "\t" + this.daysRented + "\t"
+                + String.valueOf(this.amount) + "\n";
+        return resultBody;
+    }
+
 }
